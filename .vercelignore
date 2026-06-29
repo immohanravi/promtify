@@ -1,0 +1,17 @@
+# Ignore Rust Tauri assets and builds
+src-tauri
+target
+gen
+
+# Ignore node modules and local builds
+node_modules
+dist
+.git
+.github
+.idea
+.vscode
+.gemini
+
+# Ignore logs
+*.log
+logs
