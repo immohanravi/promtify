@@ -987,7 +987,7 @@ Return ONLY the generated copy-pasteable prompt itself. Do not include any meta-
                     Accept any browser permission popup asking to <em>"access other apps and services on this device"</em>.
                   </li>
                   <li>
-                    Run Ollama with origins enabled in your terminal:
+                    Run Ollama with origins enabled in your terminal, or configure it permanently (see the project <strong>README.md</strong> for step-by-step macOS, Windows, and Linux instructions):
                     <code style={{ display: 'block', fontSize: '0.62rem', backgroundColor: 'rgba(0,0,0,0.4)', padding: '4px', borderRadius: '4px', marginTop: '3px', wordBreak: 'break-all', fontFamily: 'monospace' }}>
                       OLLAMA_ORIGINS="*" ollama serve
                     </code>

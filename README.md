@@ -61,20 +61,59 @@ npm run desktop:build
 
 ---
 
-## 🔌 Connecting to Local Ollama Models
+## 🔌 Connecting to Local Ollama Models (CORS & PNA Setup)
 
-Web browsers restrict requests to local servers due to CORS blocks. To allow Promptify to query local Ollama models directly from the browser:
+Web browsers block requests from public websites (like a Vercel deployment) to local addresses (`localhost`) due to CORS and Private Network Access security policies. 
 
-- **macOS & Linux**:
-  Launch Ollama with the origins header set:
-  ```bash
-  OLLAMA_ORIGINS="*" ollama serve
-  ```
-- **Windows (PowerShell)**:
-  ```powershell
-  $env:OLLAMA_ORIGINS="*"
-  ollama serve
-  ```
+To allow Promptify to query your local Ollama models, you need to enable the `OLLAMA_ORIGINS` variable. Here is how to configure it **permanently** so you don't have to run it from a terminal every time:
+
+### 1. macOS (Mac GUI App)
+If you run Ollama as a native macOS Menu Bar application:
+1. Open your terminal and append the environment declaration to your profile:
+   ```bash
+   echo 'launchctl setenv OLLAMA_ORIGINS "*"' >> ~/.zprofile
+   ```
+2. Apply the setting for the current session:
+   ```bash
+   launchctl setenv OLLAMA_ORIGINS "*"
+   ```
+3. **Restart the Ollama App**: Quit Ollama from the macOS Menu Bar and re-open it.
+
+---
+
+### 2. Windows (Tray App)
+If you run Ollama as a Windows background task:
+1. **Quit Ollama**: Close the Ollama application by right-clicking the taskbar tray icon.
+2. **Set Environment Variable**:
+   - Open the Windows Start Menu, search for **"Environment Variables"**, and select **Edit environment variables for your account**.
+   - Under **User variables**, click **New...**.
+   - Set **Variable name** to `OLLAMA_ORIGINS` and **Variable value** to `*`.
+   - Click **OK** to save.
+3. **Launch Ollama**: Open Ollama again from the Start Menu.
+
+---
+
+### 3. Linux (Systemd Service)
+If you installed Ollama as a service:
+1. Open the systemd override config editor:
+   ```bash
+   sudo systemctl edit ollama.service
+   ```
+2. Add the environment rule in the file:
+   ```ini
+   [Service]
+   Environment="OLLAMA_ORIGINS=*"
+   ```
+3. Save the file and reload systemd to apply:
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl restart ollama
+   ```
+
+---
+
+### 💡 Best Alternative: Use the Tauri Desktop App
+If you do not want to configure CORS on your system, simply use our native **Desktop Application** (via `npm run desktop:dev` or building the binary). Because native desktop apps run outside of the web browser's security sandbox, they are **fully exempt from CORS and Private Network Access blocks** and will connect to your local Ollama server out of the box!
 
 ---
 
